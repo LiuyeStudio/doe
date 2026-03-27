@@ -9,7 +9,8 @@
     <meta name="description" content="恐龙眨眼行为研究会（DOE）专注研究恐龙眨眼行为、化石证据与演化脉络，证明恐龙并未真正灭绝，而是以鸟类形态延续至今。">
     <meta name="keywords" content="恐龙眨眼,DOE,恐龙眨眼行为研究会,古生物研究,恐龙未灭绝,化石证据,主龙类,鸟类演化">
     <meta name="author" content="恐龙眨眼行为研究会 DOE">
-
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -48,20 +49,24 @@
             }
         }
 
-        html, body {
-            scroll-snap-type: y mandatory;
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            height: 100%;
+        /* PC端全屏滚动吸附，手机端关闭 */
+        @media (min-width: 768px) {
+            html, body {
+                scroll-snap-type: y mandatory;
+                height: 100%;
+            }
+            section, header, footer {
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+            }
         }
 
-        section, header, footer {
-            scroll-snap-align: start;
-            scroll-snap-stop: always;
+        html, body {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
         body {
-            overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
         }
 
@@ -73,117 +78,135 @@
 </head>
 
 <body class="bg-neutral text-dark antialiased">
-    <!-- 导航栏（已修复对齐BUG） -->
+    <!-- 导航栏（完美对齐 + 手机适配） -->
     <nav class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
+            <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                     <i class="fa fa-eye text-primary text-lg"></i>
                 </div>
                 <span class="font-bold text-lg text-primary">DOE 研究会</span>
             </div>
-            <div class="hidden md:flex items-center gap-8 text-sm">
+            <div class="hidden md:flex items-center gap-6 text-sm">
                 <a href="#hero" class="hover:text-primary transition-colors nav-link">首页</a>
                 <a href="#theory" class="hover:text-primary transition-colors nav-link">核心理念</a>
                 <a href="#research" class="hover:text-primary transition-colors nav-link">研究发现</a>
-                <a href="#mission" class="hover:text-primary transition-colors nav-link">我们的使命</a>
+                <a href="#mission" class="hover:text-primary transition-colors nav-link">使命</a>
                 <a href="#join" class="hover:text-primary transition-colors nav-link">加入我们</a>
+            </div>
+            <!-- 手机端菜单按钮 -->
+            <div class="md:hidden flex items-center">
+                <button id="menuBtn" class="w-10 h-10 flex items-center justify-center text-dark">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- 首屏（全屏板块） -->
-    <header id="hero" class="pt-16 h-screen flex flex-col items-center justify-center px-4 relative overflow-hidden section-fade">
+    <!-- 手机端弹出菜单 -->
+    <div id="mobileMenu" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-center gap-6 text-lg hidden">
+        <button id="closeMenu" class="absolute top-5 right-5 w-12 h-12 flex items-center justify-center">
+            <i class="fa fa-times text-2xl"></i>
+        </button>
+        <a href="#hero" class="nav-link-mobile">首页</a>
+        <a href="#theory" class="nav-link-mobile">核心理念</a>
+        <a href="#research" class="nav-link-mobile">研究发现</a>
+        <a href="#mission" class="nav-link-mobile">使命</a>
+        <a href="#join" class="nav-link-mobile">加入我们</a>
+    </div>
+
+    <!-- 首屏 -->
+    <header id="hero" class="min-h-screen flex flex-col items-center justify-center px-4 pt-20 pb-16 relative overflow-hidden section-fade">
         <div class="absolute -top-10 -right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-amber/5 rounded-full blur-3xl"></div>
         
-        <div class="mx-auto w-32 h-32 mb-10 relative z-10">
+        <div class="mx-auto w-28 h-28 md:w-32 md:h-32 mb-8 relative z-10">
             <div class="w-full h-full rounded-full bg-amber/10 flex items-center justify-center overflow-hidden shadow-lg">
-                <div class="w-20 h-20 rounded-full bg-amber/20 flex items-center justify-center relative">
-                    <div class="w-12 h-12 rounded-full bg-amber flex items-center justify-center">
-                        <div class="w-5 h-5 rounded-full bg-dark"></div>
+                <div class="w-16 h-16 md:w-20 md:h-20 rounded-full bg-amber/20 flex items-center justify-center relative">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-amber flex items-center justify-center">
+                        <div class="w-4 h-4 md:w-5 md:h-5 rounded-full bg-dark"></div>
                     </div>
                     <div class="absolute top-0 left-0 w-full blink-animation bg-white/80"></div>
                 </div>
             </div>
         </div>
 
-        <h1 class="text-[clamp(2rem,5vw,4rem)] font-bold leading-tight mb-5 text-center text-balance relative z-10">
+        <h1 class="text-3xl md:text-[clamp(2rem,5vw,4rem)] font-bold leading-tight mb-4 text-center text-balance relative z-10 px-2">
             恐龙会眨眼，<br class="md:hidden">所以它们从未灭绝
         </h1>
-        <p class="text-gray-600 text-lg md:text-xl max-w-xl mx-auto mb-10 relative z-10">
+        <p class="text-gray-600 text-base md:text-xl max-w-xl mx-auto mb-8 relative z-10 px-2 text-center">
             恐龙眨眼行为研究会｜Dinosaur Ocular Eyelid Research（DOE）
         </p>
-        <a href="#theory" class="px-9 py-3.5 bg-primary text-white rounded-full hover:bg-primary/90 hover:shadow-xl transition-all duration-300 relative z-10">
+        <a href="#theory" class="px-8 py-3 bg-primary text-white rounded-full hover:bg-primary/90 hover:shadow-xl transition-all duration-300 relative z-10">
             探索真相 <i class="fa fa-arrow-right ml-2"></i>
         </a>
     </header>
 
-    <!-- 核心理念（全屏板块） -->
-    <section id="theory" class="h-screen flex flex-col justify-center bg-white px-4 py-16 section-fade">
+    <!-- 核心理念 -->
+    <section id="theory" class="py-16 md:h-screen flex flex-col justify-center bg-white px-4 section-fade">
         <div class="max-w-6xl mx-auto w-full">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">核心理念</h2>
-            <p class="text-gray-500 text-center mb-16 md:mb-20">我们相信，眨眼是生命延续的密码</p>
-            <div class="grid md:grid-cols-3 gap-8">
-                <a href="#research" class="p-8 rounded-2xl bg-neutral hover:bg-primary/5 hover:-translate-y-2 hover:shadow-xl transition-all duration-500 block">
-                    <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6">
-                        <i class="fa fa-heart-o text-primary text-2xl"></i>
+            <h2 class="text-2xl md:text-4xl font-bold text-center mb-3">核心理念</h2>
+            <p class="text-gray-500 text-center mb-10 md:mb-20">我们相信，眨眼是生命延续的密码</p>
+            <div class="grid md:grid-cols-3 gap-6">
+                <a href="#research" class="p-6 rounded-2xl bg-neutral hover:bg-primary/5 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 block">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                        <i class="fa fa-heart-o text-primary text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">眨眼即生命</h3>
-                    <p class="text-gray-600">眨眼是湿润、清洁、防御、交流的基础生命行为，绝非无意义动作。会眨眼的生物，从未真正消失。</p>
-                    <div class="mt-5 text-primary text-sm font-medium">了解更多 →</div>
+                    <h3 class="text-lg font-bold mb-2">眨眼即生命</h3>
+                    <p class="text-gray-600 text-sm">眨眼是湿润、清洁、防御、交流的基础生命行为，绝非无意义动作。会眨眼的生物，从未真正消失。</p>
+                    <div class="mt-4 text-primary text-sm">了解更多 →</div>
                 </a>
-                <a href="#research" class="p-8 rounded-2xl bg-neutral hover:bg-primary/5 hover:-translate-y-2 hover:shadow-xl transition-all duration-500 block">
-                    <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6">
-                        <i class="fa fa-folder-open-o text-primary text-2xl"></i>
+                <a href="#research" class="p-6 rounded-2xl bg-neutral hover:bg-primary/5 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 block">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                        <i class="fa fa-folder-open-o text-primary text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">化石里的证据</h3>
-                    <p class="text-gray-600">恐龙眼窝结构、巩膜环、眼睑附着痕迹，与现代鸟类高度同源。眨眼机制，在恐龙身上真实存在。</p>
-                    <div class="mt-5 text-primary text-sm font-medium">了解更多 →</div>
+                    <h3 class="text-lg font-bold mb-2">化石里的证据</h3>
+                    <p class="text-gray-600 text-sm">恐龙眼窝结构、巩膜环、眼睑附着痕迹，与现代鸟类高度同源。眨眼机制，在恐龙身上真实存在。</p>
+                    <div class="mt-4 text-primary text-sm">了解更多 →</div>
                 </a>
-                <a href="#mission" class="p-8 rounded-2xl bg-neutral hover:bg-primary/5 hover:-translate-y-2 hover:shadow-xl transition-all duration-500 block">
-                    <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mb-6">
-                        <i class="fa fa-leaf text-primary text-2xl"></i>
+                <a href="#mission" class="p-6 rounded-2xl bg-neutral hover:bg-primary/5 hover:-translate-y-1 hover:shadow-lg transition-all duration-500 block">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                        <i class="fa fa-leaf text-primary text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-3">未灭绝的真相</h3>
-                    <p class="text-gray-600">鸟类是恐龙的直系后代，它们仍在眨眼、繁衍、遍布全球。恐龙以“鸟”的形态，活在今天。</p>
-                    <div class="mt-5 text-primary text-sm font-medium">了解更多 →</div>
+                    <h3 class="text-lg font-bold mb-2">未灭绝的真相</h3>
+                    <p class="text-gray-600 text-sm">鸟类是恐龙的直系后代，它们仍在眨眼、繁衍、遍布全球。足以证明恐龙，活在今天。</p>
+                    <div class="mt-4 text-primary text-sm">了解更多 →</div>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- 研究发现（全屏板块） -->
-    <section id="research" class="h-screen flex flex-col justify-center px-4 py-16 section-fade">
+    <!-- 研究发现 -->
+    <section id="research" class="py-16 md:h-screen flex flex-col justify-center px-4 section-fade">
         <div class="max-w-6xl mx-auto w-full">
-            <h2 class="text-3xl md:text-4xl font-bold text-center mb-4">研究发现</h2>
-            <p class="text-gray-500 text-center mb-16 md:mb-20">来自化石与现代生命的共同印证</p>
-            <div class="grid md:grid-cols-3 gap-6 mb-12">
-                <div class="bg-white p-7 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
-                    <h3 class="font-bold text-lg mb-5 flex items-center">
-                        <i class="fa fa-search text-primary mr-3 text-lg"></i>化石证据
+            <h2 class="text-2xl md:text-4xl font-bold text-center mb-3">研究发现</h2>
+            <p class="text-gray-500 text-center mb-10 md:mb-20">来自化石与现代生命的共同印证</p>
+            <div class="grid md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <h3 class="font-bold text-base md:text-lg mb-4 flex items-center">
+                        <i class="fa fa-search text-primary mr-2"></i>化石证据
                     </h3>
-                    <ul class="text-gray-600 space-y-3 text-sm">
+                    <ul class="text-gray-600 space-y-2 text-xs md:text-sm">
                         <li>• 兽脚类恐龙眼窝保留眼睑肌肉附着点</li>
-                        <li>• 部分恐龙化石显示瞬膜（第三眼睑）结构</li>
+                        <li>• 部分恐龙化石显示瞬膜结构</li>
                         <li>• 巩膜环尺寸支持频繁眨眼维持视觉</li>
                     </ul>
                 </div>
-                <div class="bg-white p-7 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
-                    <h3 class="font-bold text-lg mb-5 flex items-center">
-                        <i class="fa fa-twitter text-primary mr-3 text-lg"></i>现代对照
+                <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <h3 class="font-bold text-base md:text-lg mb-4 flex items-center">
+                        <i class="fa fa-twitter text-primary mr-2"></i>现代对照
                     </h3>
-                    <ul class="text-gray-600 space-y-3 text-sm">
+                    <ul class="text-gray-600 space-y-2 text-xs md:text-sm">
                         <li>• 鸟类眼部解剖与恐龙高度一致</li>
                         <li>• 鳄鱼眨眼机制印证主龙类祖先特征</li>
                         <li>• 眨眼行为模式跨亿年高度保守</li>
                     </ul>
                 </div>
-                <div class="bg-white p-7 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
-                    <h3 class="font-bold text-lg mb-5 flex items-center">
-                        <i class="fa fa-lightbulb-o text-primary mr-3 text-lg"></i>行为意义
+                <div class="bg-white p-5 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <h3 class="font-bold text-base md:text-lg mb-4 flex items-center">
+                        <i class="fa fa-lightbulb-o text-primary mr-2"></i>行为意义
                     </h3>
-                    <ul class="text-gray-600 space-y-3 text-sm">
+                    <ul class="text-gray-600 space-y-2 text-xs md:text-sm">
                         <li>• 眨眼是认知、交流、生存的关键行为</li>
                         <li>• 恐龙具备复杂眼部行为能力</li>
                         <li>• 眨眼能力赋予恐龙极强演化韧性</li>
@@ -191,52 +214,52 @@
                 </div>
             </div>
             <div class="flex justify-center">
-                <a href="#" class="px-7 py-3 bg-primary text-white rounded-full hover:bg-primary/90 hover:shadow-lg transition-all duration-300">
+                <a href="#" class="px-6 py-2.5 bg-primary text-white rounded-full hover:bg-primary/90 hover:shadow-lg transition-all duration-300 text-sm">
                     查看更多研究成果
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- 我们的使命（全屏板块） -->
-    <section id="mission" class="h-screen flex flex-col justify-center bg-primary/5 px-4 py-16 section-fade">
+    <!-- 我们的使命 -->
+    <section id="mission" class="py-16 md:h-screen flex flex-col justify-center bg-primary/5 px-4 section-fade">
         <div class="max-w-5xl mx-auto w-full text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-4">我们的使命</h2>
-            <p class="text-gray-600 text-xl mb-16">我们研究眨眼，为了重新认识恐龙</p>
-            <div class="grid md:grid-cols-2 gap-6 text-left">
-                <div class="bg-white p-6 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
-                    <p class="text-gray-700 font-medium">✅ 重建恐龙眼部行为与生态</p>
+            <h2 class="text-2xl md:text-4xl font-bold mb-3">我们的使命</h2>
+            <p class="text-gray-600 text-base md:text-xl mb-10">我们研究眨眼，为了重新认识恐龙</p>
+            <div class="grid md:grid-cols-2 gap-4 text-left">
+                <div class="bg-white p-4 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <p class="text-gray-700 text-sm md:text-base">重建恐龙眼部行为与生态</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
-                    <p class="text-gray-700 font-medium">✅ 联结史前与现代生命的演化脉络</p>
+                <div class="bg-white p-4 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <p class="text-gray-700 text-sm md:text-base">联结史前与现代生命的演化脉络</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
-                    <p class="text-gray-700 font-medium">✅ 打破“恐龙已灭绝”的认知误区</p>
+                <div class="bg-white p-4 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <p class="text-gray-700 text-sm md:text-base">打破“恐龙已灭绝”的认知误区</p>
                 </div>
-                <div class="bg-white p-6 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
-                    <p class="text-gray-700 font-medium">✅ 推动古生物学与演化生物学跨界研究</p>
+                <div class="bg-white p-4 rounded-xl hover:shadow-lg hover:-translate-y-1 transition-all duration-500">
+                    <p class="text-gray-700 text-sm md:text-base">推动古生物学与演化生物学跨界研究</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- 加入我们（全屏板块） -->
-    <section id="join" class="h-screen flex flex-col justify-center px-4 py-16 section-fade">
-        <div class="max-w-xl mx-auto w-full bg-white p-10 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500">
-            <h2 class="text-3xl font-bold text-center mb-2">加入我们</h2>
-            <p class="text-gray-600 text-center mb-10">与我们一起，看见活着的恐龙</p>
-            <form class="space-y-5">
+    <!-- 加入我们 -->
+    <section id="join" class="py-16 md:h-screen flex flex-col justify-center px-4 section-fade">
+        <div class="max-w-md mx-auto w-full bg-white p-6 md:p-10 rounded-2xl shadow-md hover:shadow-xl transition-all duration-500">
+            <h2 class="text-2xl md:text-3xl font-bold text-center mb-2">加入我们</h2>
+            <p class="text-gray-600 text-center mb-6 text-sm md:text-base">与我们一起，看见活着的恐龙</p>
+            <form class="space-y-4">
                 <div>
-                    <label class="block text-sm font-medium mb-1.5">姓名</label>
-                    <input type="text" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition">
+                    <label class="block text-sm font-medium mb-1">姓名</label>
+                    <input type="text" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-1.5">邮箱</label>
-                    <input type="email" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition">
+                    <label class="block text-sm font-medium mb-1">邮箱</label>
+                    <input type="email" class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium mb-1.5">我想参与</label>
-                    <select class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition">
+                    <label class="block text-sm font-medium mb-1">我想参与</label>
+                    <select class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50">
                         <option>科研合作</option>
                         <option>科普传播</option>
                         <option>捐赠支持</option>
@@ -249,22 +272,33 @@
         </div>
     </section>
 
-    <!-- 页脚（全屏+修复滚动BUG） -->
-    <footer class="h-screen flex items-center justify-center bg-dark text-white text-center py-10 section-fade">
+    <!-- 页脚 -->
+    <footer class="py-16 bg-dark text-white text-center section-fade">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-center gap-4 mb-5 items-center">
-                <i class="fa fa-eye text-primary text-2xl"></i>
-                <span class="font-bold text-xl">恐龙眨眼行为研究会（DOE）</span>
+            <div class="flex justify-center gap-3 mb-4 items-center">
+                <i class="fa fa-eye text-primary text-xl"></i>
+                <span class="font-bold text-lg">恐龙眨眼行为研究会（DOE）</span>
             </div>
-            <p class="mb-3 text-white/70">contact@doe-research.org</p>
-            <p class="text-white/50 mb-5">© 2026 DOE｜All Rights Reserved</p>
+            <p class="mb-2 text-white/70 text-sm">contact@doe-research.org</p>
+            <p class="text-white/50 text-xs mb-4">© 2026 DOE｜All Rights Reserved</p>
             <p class="text-white/40 text-xs">眨眼，是生命从未停止的证明</p>
         </div>
     </footer>
 
     <script>
+        // 菜单控制
+        const menuBtn = document.getElementById('menuBtn');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn?.addEventListener('click', () => mobileMenu.classList.remove('hidden'));
+        closeMenu?.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        document.querySelectorAll('.nav-link-mobile').forEach(a => {
+            a.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
         // 平滑滚动
-        document.querySelectorAll('.nav-link').forEach(link => {
+        document.querySelectorAll('.nav-link, .nav-link-mobile').forEach(link => {
             link.addEventListener('click', function(e) {
                 const target = this.getAttribute('href');
                 if (target.startsWith('#') && document.querySelector(target)) {
@@ -274,17 +308,14 @@
             });
         });
 
-        // 柔和入场动画
+        // 入场动画
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, 200);
+                    setTimeout(() => entry.target.classList.add('visible'), 200);
                 }
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.section-fade').forEach(el => observer.observe(el));
     </script>
 </body>
